@@ -1,0 +1,96 @@
+% !TeX document-id = {3d5ac9d1-fe14-4307-8745-89369ff1b702}
+% !TeX TXS-program:compile = txs:///latexmk/{-pdf}
+% !TeX root = main.tex
+% Kompilacja: latexmk main.tex
+
+% ============================================================================
+% JAK KORZYSTAĆ Z TEGO PLIKU
+% ============================================================================
+% Ten plik określa kolejność elementów całego dokumentu. Nie wpisuj tutaj
+% treści raportu ani danych autorów.
+%
+% MOŻNA ZMIENIAĆ:
+%   - kolejność poleceń \include w sekcji „ROZDZIAŁY PROJEKTU”;
+%   - listę dołączanych rozdziałów i załączników;
+%   - tymczasowo wyłączać rozdział, dodając przed \include znak %.
+%
+% NIE NALEŻY ZMIENIAĆ:
+%   - poleceń między \begin{document} a sekcją „ROZDZIAŁY PROJEKTU”;
+%   - poleceń \input konfiguracji, \documentclass i \usepackage poniżej;
+%   - poleceń \begin{document}, \end{document} i \appendix.
+%
+% Dane projektu uzupełniaj w: config/metadata.tex
+% Treść raportu zapisuj w: chapters/*.tex
+% Wygląd dokumentu definiuje: config/project-style.sty
+% ============================================================================
+
+% === KONFIGURACJA DOKUMENTU — NIE ZMIENIAJ TYCH TRZECH POLECEŃ ===
+\input{config/metadata}
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage{config/project-style}
+
+% === POCZĄTEK DOKUMENTU — NIE USUWAJ ===
+\begin{document}
+
+% === STRONA TYTUŁOWA I SPISY — USTAWIENIA SĄ W config/metadata.tex ===
+% Widoczność spisów rysunków, tabel i listingów ustawia się tam przez true/false.
+% Poniższych poleceń nie trzeba zmieniać ani usuwać.
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
+\makeprojecttitle
+
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\begin{singlespace}
+  \hypersetup{linkcolor=black}
+  \tableofcontents
+  \hypersetup{linkcolor=projectblue}
+\end{singlespace}
+\ifdefstring{\showlistoffigures}{true}{\printprojectlistoffigures}{}
+\ifdefstring{\showlistoftables}{true}{\printprojectlistoftables}{}
+\ifdefstring{\showlistoflistings}{true}{\printprojectlistoflistings}{}
+\clearpage
+\pagenumbering{arabic}
+
+% === ROZDZIAŁY PROJEKTU — TĘ LISTĘ MOŻNA ZMIENIAĆ ===
+% Każde polecenie \include dołącza jeden plik z katalogu chapters/.
+% Nie podawaj rozszerzenia .tex.
+%
+% Przykład wyłączenia rozdziału:
+% % \include{chapters/06-organizacja-projektu}
+%
+% Przykład dodania własnego rozdziału:
+% 1. Utwórz plik chapters/08-instrukcja-uzytkownika.tex.
+% 2. Rozpocznij go poleceniem \chapter{Instrukcja użytkownika}.
+% 3. Dodaj poniżej: \include{chapters/08-instrukcja-uzytkownika}
+%
+% Kolejność rozdziałów można dostosować do charakteru projektu i wymagań
+% prowadzącego.
+\include{chapters/01-wprowadzenie}
+\include{chapters/02-cel-i-wymagania}
+\include{chapters/03-koncepcja-i-projekt}
+\include{chapters/04-realizacja}
+\include{chapters/05-weryfikacja-i-wyniki}
+\include{chapters/06-organizacja-projektu}
+\include{chapters/07-podsumowanie}
+
+% === OŚWIADCZENIA KOŃCOWE — DOMYŚLNIE WŁĄCZONE ===
+% Widoczność obu części ustawia się przez true/false w config/metadata.tex.
+% Treść należy uzupełnić w odpowiednich plikach katalogu backmatter/.
+\ifdefstring{\showaideclaration}{true}{\input{backmatter/ai-declaration}}{}
+\ifdefstring{\showcontributions}{true}{\input{backmatter/contributions}}{}
+
+% === BIBLIOGRAFIA — NIE USUWAJ, JEŻELI W RAPORCIE SĄ CYTOWANIA ===
+% Źródła dodaje się do bibliografia.bib i przywołuje w tekście przez
+% \cite{klucz}. Bibliografia zostanie utworzona automatycznie.
+\printprojectbibliography
+
+% === ZAŁĄCZNIKI — SEKCJA OPCJONALNA ===
+% Polecenie \appendix przełącza numerację kolejnych rozdziałów na litery.
+% Aby dodać załącznik, utwórz odpowiedni plik i usuń znak % przed \include.
+% Jeżeli załączników nie ma, pozostaw przykładowe polecenie zakomentowane.
+\appendix
+% \include{chapters/08-zalacznik-a}
+
+% === KONIEC DOKUMENTU — NICZEGO NIE DODAWAJ PONIŻEJ ===
+\end{document}

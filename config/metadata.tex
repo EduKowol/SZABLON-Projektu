@@ -1,0 +1,68 @@
+% ============================================================================
+% DANE PROJEKTU — TEN PLIK NALEŻY UZUPEŁNIĆ
+% ============================================================================
+% Zmieniaj wyłącznie tekst znajdujący się między drugą parą nawiasów { }.
+% Nie usuwaj poleceń \newcommand ani ich nawiasów.
+%
+% Przykład:
+%   \newcommand{\projecttitle}{Projekt stanowiska pomiarowego}
+%
+% Znaki specjalne LaTeX-a, m.in. %, &, _ oraz #, należy poprzedzić znakiem \.
+% Przykład: 50\%, R\&D, plik\_wynikowy
+% ============================================================================
+
+% ETAP PRACY: draft albo final.
+% draft — brakujące dane powodują ostrzeżenia, ale PDF nadal powstaje.
+% final — brakujące podstawowe dane zatrzymują kompilację.
+\newcommand{\projectstatus}{draft}
+
+% === UCZELNIA I PODSTAWOWE DANE PROJEKTU ===
+\newcommand{\university}{Politechnika Opolska}
+\newcommand{\faculty}{Wydział Elektrotechniki, Automatyki i Informatyki}
+\newcommand{\projecttitle}{Tytuł projektu}
+% Podtytuł jest opcjonalny. Pozostaw {}, jeżeli nie jest potrzebny.
+\newcommand{\projectsubtitle}{}
+\newcommand{\coursetitle}{Nazwa przedmiotu}
+\newcommand{\projecttype}{Projekt semestralny}
+\newcommand{\programme}{Nazwa kierunku}
+\newcommand{\studyform}{studia stacjonarne / niestacjonarne}
+\newcommand{\semester}{semestr 0}
+\newcommand{\instructor}{dr inż. Imię i nazwisko}
+
+% === AUTOR LUB ZESPÓŁ ===
+% Znak & oddziela nazwisko od numeru albumu, a \\ kończy wiersz.
+% Jeden autor:
+%   Imię i nazwisko & 000000 \\
+% Zespół:
+%   Anna Nowak & 123456 \\
+%   Jan Kowalski & 234567 \\
+\newcommand{\projectauthors}{%
+  Imię i nazwisko & 000000 \\
+}
+% Wpisz tych samych autorów w jednym wierszu. To pole jest używane wyłącznie
+% we właściwościach PDF, dlatego nie stosuje się tu & ani \\.
+\newcommand{\projectpdfauthors}{Imię i nazwisko}
+
+% === MIEJSCE I TERMIN ===
+\newcommand{\city}{Opole}
+\newcommand{\academicyear}{2026/2027}
+\newcommand{\submissiondate}{dd.mm.rrrr}
+
+% === LOGO ===
+% Ścieżka jest liczona od katalogu głównego projektu.
+% Logo można wyłączyć przez ustawienie: \newcommand{\universitylogo}{}
+\newcommand{\universitylogo}{assets/branding/logo-weaii.jpeg}
+\newcommand{\universitylogowidth}{0.55\textwidth}
+
+% === OPCJONALNE WYKAZY ===
+% Dozwolone wartości to wyłącznie true albo false, bez cudzysłowów.
+% Wykaz ma sens dopiero wtedy, gdy raport zawiera odpowiednie podpisane elementy.
+\newcommand{\showlistoffigures}{false}
+\newcommand{\showlistoftables}{false}
+\newcommand{\showlistoflistings}{false}
+
+% === OŚWIADCZENIA KOŃCOWE ===
+% Obie części są domyślnie włączone. Wartość false można zastosować wyłącznie,
+% gdy prowadzący nie wymaga danego oświadczenia albo nie ma ono zastosowania.
+\newcommand{\showaideclaration}{true}
+\newcommand{\showcontributions}{true}

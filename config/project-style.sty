@@ -1,0 +1,161 @@
+% ============================================================================
+% TECHNICZNY PLIK STYLU — NIE WYMAGA EDYCJI PODCZAS PISANIA RAPORTU
+% ============================================================================
+% Dane projektu zmienia się w config/metadata.tex, kolejność rozdziałów w
+% main.tex, a treść w chapters/*.tex. Zmiany w tym pliku wpływają globalnie na
+% wygląd i działanie dokumentu; powinny być wprowadzane tylko świadomie.
+% ============================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{config/project-style}[2026/07/21 Project report template]
+\PassOptionsToPackage{table}{xcolor}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[utf8]{inputenc}
+  \RequirePackage{newtxtext,newtxmath}
+\else
+  \RequirePackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+  \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+  \IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{\setmonofont{Latin Modern Mono}}
+  \RequirePackage{unicode-math}
+\fi
+\RequirePackage[polish]{babel}
+\RequirePackage{csquotes,microtype,geometry,setspace,graphicx,adjustbox}
+\RequirePackage{amsmath,booktabs,array,tabularx,longtable,siunitx}
+\RequirePackage{enumitem,titlesec,tocloft,caption,subcaption,listings,xcolor}
+\RequirePackage{fancyhdr,etoolbox}
+\definecolor{projectblue}{RGB}{0,70,125}
+\definecolor{projectcodebackground}{RGB}{247,248,250}
+\definecolor{projectcodeframe}{RGB}{150,155,165}
+\RequirePackage[colorlinks=true,linkcolor=projectblue,citecolor=projectblue,urlcolor=projectblue,pdfusetitle]{hyperref}
+\RequirePackage{bookmark}
+\RequirePackage[nameinlink,noabbrev]{cleveref}
+\RequirePackage[backend=biber,style=ieee,citestyle=numeric-comp,sorting=none,sortcites=true,giveninits=true]{biblatex}
+\addbibresource{bibliografia.bib}
+
+\geometry{a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=15pt,headsep=0.7cm,footskip=1cm}
+\onehalfspacing
+\setlength{\parindent}{0.75cm}
+\setlength{\parskip}{0pt}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\emergencystretch=2em
+\titleformat{\chapter}[hang]{\bfseries\fontsize{16}{19}\selectfont}{\thechapter.}{0.6em}{}
+\titleformat{\section}[hang]{\bfseries\fontsize{14}{17}\selectfont}{\thesection}{0.6em}{}
+\titleformat{\subsection}[hang]{\bfseries\fontsize{12}{15}\selectfont}{\thesubsection}{0.6em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+\setlength{\cftbeforechapskip}{4pt}
+\captionsetup{font=small,labelfont=bf,labelsep=period,justification=centering,skip=6pt}
+\captionsetup[table]{position=top}
+\numberwithin{equation}{chapter}
+\setlist{topsep=6pt,itemsep=2pt,parsep=0pt}
+\sisetup{locale=PL,mode=match,per-mode=symbol,separate-uncertainty=true,range-phrase={--},range-units=single}
+
+% Pakiet listings nie dodaje automatycznie znaków Unicode o kodach większych
+% niż 255 do listy znaków przetwarzanych jak litery. W LuaLaTeX-u i XeLaTeX-u
+% powoduje to przesuwanie polskich znaków na początek tokenu lub wiersza.
+% Rejestracja przez \lst@DefEC zachowuje ich kolejność i kolorowanie zarówno
+% w środowisku lstlisting, jak i w plikach wczytywanych przez \lstinputlisting.
+\ifPDFTeX\else
+  \begingroup
+    \catcode0=12
+    \makeatletter
+    \g@addto@macro\lst@DefEC{%
+      \lst@CCECUse\lst@ProcessLetter
+      ąćęłńóśźżĄĆĘŁŃÓŚŹŻ%
+      ^^00%
+    }%
+  \endgroup
+\fi
+
+\lstdefinestyle{project}{
+  basicstyle=\ttfamily\small,backgroundcolor=\color{projectcodebackground},
+  frame=single,rulecolor=\color{projectcodeframe},framerule=0.4pt,
+  columns=fullflexible,keepspaces=true,breaklines=true,showstringspaces=false,
+  numbers=left,numberstyle=\scriptsize\color{gray},numbersep=9pt,tabsize=4,
+  captionpos=t,xleftmargin=1.25cm,framexleftmargin=1cm,
+  keywordstyle=\bfseries\color{projectblue},commentstyle=\itshape\color{teal!60!black},
+  stringstyle=\color{red!60!black},aboveskip=12pt,belowskip=12pt
+}
+\lstdefinestyle{project-python}{style=project,language=Python}
+\lstdefinestyle{project-matlab}{style=project,language=Matlab}
+\lstdefinestyle{project-c}{style=project,language=C}
+\lstdefinestyle{project-cpp}{style=project,language=[11]C++}
+\lstdefinestyle{project-shell}{style=project,language=bash}
+\lstset{style=project}
+\AtBeginDocument{\counterwithin{lstlisting}{chapter}}
+\renewcommand{\lstlistingname}{Listing}
+\renewcommand{\lstlistlistingname}{Spis listingów}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0pt}}
+
+\newcommand{\projectgraphic}[2][]{\includegraphics[max width=\linewidth,max height=0.78\textheight,keepaspectratio,#1]{#2}}
+\newenvironment{projectwidetable}{\begin{adjustbox}{max width=\linewidth}}{\end{adjustbox}}
+
+\crefname{chapter}{rozdział}{rozdziały}
+\Crefname{chapter}{Rozdział}{Rozdziały}
+\crefname{section}{podrozdział}{podrozdziały}
+\Crefname{section}{Podrozdział}{Podrozdziały}
+\crefname{figure}{rysunek}{rysunki}
+\Crefname{figure}{Rysunek}{Rysunki}
+\crefname{table}{tabela}{tabele}
+\Crefname{table}{Tabela}{Tabele}
+\crefname{equation}{równanie}{równania}
+\Crefname{equation}{Równanie}{Równania}
+\crefname{lstlisting}{listing}{listingi}
+\Crefname{lstlisting}{Listing}{Listingi}
+
+\hypersetup{pdftitle={\projecttitle},pdfauthor={\projectpdfauthors},pdfsubject={Dokumentacja projektu}}
+
+\newcommand{\makeprojecttitle}{%
+  \begin{titlepage}\thispagestyle{empty}\begin{center}
+  \ifdefempty{\universitylogo}{}{\IfFileExists{\universitylogo}{\includegraphics[width=\universitylogowidth]{\universitylogo}\par\vspace{0.6cm}}{}}
+  {\bfseries\large\university\par}\vspace{0.2cm}{\large\faculty\par}\vspace{1.0cm}
+  {\bfseries\fontsize{15}{18}\selectfont\MakeUppercase{\projecttype}\par}\vspace{0.35cm}
+  {\large\coursetitle\par}\vspace{1.0cm}
+  {\bfseries\fontsize{18}{22}\selectfont\projecttitle\par}
+  \ifdefempty{\projectsubtitle}{}{\vspace{0.35cm}{\itshape\large\projectsubtitle\par}}
+  \end{center}\vfill
+  \begin{tabularx}{\textwidth}{@{}lX@{}}
+    \textbf{Autor/autorzy:} & \begin{tabular}[t]{@{}ll@{}}\projectauthors\end{tabular}\\[0.45cm]
+    \textbf{Kierunek:} & \programme\\
+    \textbf{Forma i semestr:} & \studyform, \semester\\
+    \textbf{Prowadzący:} & \instructor\\
+    \textbf{Data oddania:} & \submissiondate
+  \end{tabularx}
+  \vfill\begin{center}\city, rok akademicki \academicyear\end{center}
+  \end{titlepage}%
+}
+
+\newcommand{\printprojectbibliography}{\cleardoublepage\printbibliography[heading=bibintoc,title={Bibliografia}]}
+\newcommand{\printprojectlistoffigures}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listfigurename}\listoffigures}
+\newcommand{\printprojectlistoftables}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listtablename}\listoftables}
+\newcommand{\printprojectlistoflistings}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\lstlistlistingname}\lstlistoflistings}
+
+\newcommand{\projectvalidationissue}[1]{%
+  \ifdefstring{\projectstatus}{final}{\PackageError{project-style}{#1}{Uzupełnij config/metadata.tex lub ustaw projectstatus na draft.}}{\PackageWarningNoLine{project-style}{#1}}}
+\newcommand{\projectwarnifdefault}[3]{\ifdefstring{#1}{#2}{\projectvalidationissue{#3}}{}}
+\newcommand{\projectvalidateboolean}[2]{%
+  \ifdefstring{#1}{true}{}{%
+    \ifdefstring{#1}{false}{}{\projectvalidationissue{Nieprawidłowa wartość #2: użyj true albo false}}%
+  }%
+}
+\AtBeginDocument{%
+  \projectwarnifdefault{\projecttitle}{Tytuł projektu}{Tytuł projektu nie został uzupełniony}
+  \projectwarnifdefault{\coursetitle}{Nazwa przedmiotu}{Nazwa przedmiotu nie została uzupełniona}
+  \projectwarnifdefault{\programme}{Nazwa kierunku}{Nazwa kierunku nie została uzupełniona}
+  \projectwarnifdefault{\submissiondate}{dd.mm.rrrr}{Data oddania nie została uzupełniona}
+  \projectvalidateboolean{\showlistoffigures}{showlistoffigures}
+  \projectvalidateboolean{\showlistoftables}{showlistoftables}
+  \projectvalidateboolean{\showlistoflistings}{showlistoflistings}
+  \projectvalidateboolean{\showaideclaration}{showaideclaration}
+  \projectvalidateboolean{\showcontributions}{showcontributions}
+}
