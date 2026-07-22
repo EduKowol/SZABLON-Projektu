@@ -54,21 +54,21 @@
 \setlist{topsep=6pt,itemsep=2pt,parsep=0pt}
 \sisetup{locale=PL,mode=match,per-mode=symbol,separate-uncertainty=true,range-phrase={--},range-units=single}
 
-% Pakiet listings nie dodaje automatycznie znaków Unicode o kodach większych
-% niż 255 do listy znaków przetwarzanych jak litery. W LuaLaTeX-u i XeLaTeX-u
-% powoduje to przesuwanie polskich znaków na początek tokenu lub wiersza.
-% Rejestracja przez \lst@DefEC zachowuje ich kolejność i kolorowanie zarówno
-% w środowisku lstlisting, jak i w plikach wczytywanych przez \lstinputlisting.
+% W LuaLaTeX-u i XeLaTeX-u polskie znaki sa rejestrowane jako litery. Znacznik
+% konczacy liste jest tworzony programowo, aby w zrodle nie umieszczac znaku
+% sterujacego odrzucanego przez nowszy TeX Live (m.in. w Prism).
 \ifPDFTeX\else
-  \begingroup
-    \catcode0=12
-    \makeatletter
-    \g@addto@macro\lst@DefEC{%
-      \lst@CCECUse\lst@ProcessLetter
-      ąćęłńóśźżĄĆĘŁŃÓŚŹŻ%
-      ^^00%
-    }%
-  \endgroup
+  \ExplSyntaxOn
+  \edef\projectlistingssentinel{\char_generate:nn {0}{12}}
+  \ExplSyntaxOff
+  \edef\projectlistingextension{%
+    \noexpand\lst@CCECUse\noexpand\lst@ProcessLetter
+    ąćęłńśźżĄĆĘŁŃŚŹŻ%
+    \projectlistingssentinel}
+  \let\projectoriginallstDefEC\lst@DefEC
+  \def\lst@DefEC{%
+    \projectlistingextension
+    \projectoriginallstDefEC}
 \fi
 
 \lstdefinestyle{project}{
@@ -85,6 +85,9 @@
 \lstdefinestyle{project-c}{style=project,language=C}
 \lstdefinestyle{project-cpp}{style=project,language=[11]C++}
 \lstdefinestyle{project-shell}{style=project,language=bash}
+% Alias zgodności z przykładami przenoszonymi z „SZABLONU Prezentacji”.
+% Język podaje się wtedy osobno, np. [style=weail,language=Python].
+\lstdefinestyle{weail}{style=project}
 \lstset{style=project}
 \AtBeginDocument{\counterwithin{lstlisting}{chapter}}
 \renewcommand{\lstlistingname}{Listing}

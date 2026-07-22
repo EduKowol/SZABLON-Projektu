@@ -60,9 +60,15 @@ Każdy rysunek powinien mieć podpis, etykietę i odwołanie w tekście, np.
 ```
 
 Dostępne style: `project-python`, `project-matlab`, `project-c`, `project-cpp`
-i `project-shell`. W treści przywołuj listing przez `\cref{lst:przetwarzanie}`.
+i `project-shell`. Dostępny jest również alias `weail`, zgodny z przykładami
+ze „SZABLONU Prezentacji”; przy nim język podaj osobno, np.
+`[style=weail,language=Python]`. W treści przywołuj listing przez
+`\cref{lst:przetwarzanie}`.
 Kod może zawierać polskie znaki zapisane bezpośrednio w UTF-8; są one
 obsługiwane zarówno w środowisku `lstlisting`, jak i przez `\lstinputlisting`.
+Nie dodawaj mapowania `literate`: szablon rejestruje polskie litery przez
+`\lst@DefEC`. Kompiluj dokument silnikiem LuaLaTeX zgodnie z głównym plikiem
+`README.md`.
 
 ## Liczby i jednostki
 

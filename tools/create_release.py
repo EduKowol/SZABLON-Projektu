@@ -159,6 +159,18 @@ zarządza platforma internetowa.
 """
 
 
+def configure_main_for_target(staging: Path, target: str) -> None:
+    """Dodaj wskazanie LuaLaTeX wyłącznie do wariantu internetowego."""
+    if target != "online":
+        return
+
+    main_path = staging / "main.tex"
+    source = main_path.read_text(encoding="utf-8")
+    program_directive = "% !TeX program = lualatex\n"
+    if not source.startswith(program_directive):
+        main_path.write_text(program_directive + source, encoding="utf-8")
+
+
 def write_release_tree(project_root: Path, staging: Path, target: str) -> None:
     for name in ROOT_FILES:
         copy_required(project_root / name, staging / name)
@@ -172,6 +184,7 @@ def write_release_tree(project_root: Path, staging: Path, target: str) -> None:
     for name in TOOL_FILES:
         copy_required(project_root / "tools" / name, tools_dir / name)
 
+    configure_main_for_target(staging, target)
     (staging / "WARIANT.md").write_text(variant_readme(target), encoding="utf-8")
 
 

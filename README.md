@@ -67,6 +67,30 @@ ustawienia `\showaideclaration` i `\showcontributions` w
 
 Rysunki wstawiaj przez `\projectgraphic`, jednostki zapisuj pakietem `siunitx`, np. `\qty{12}{\volt}`, a kod przechowuj poza plikiem rozdziału i wczytuj przez `\lstinputlisting`.
 
+Zalecane style kodu to `project-python`, `project-matlab`, `project-c`,
+`project-cpp` i `project-shell`. Dla zgodności z przykładami ze „SZABLONU
+Prezentacji” działa także zapis `[style=weail,language=Python]`.
+
+## Polskie znaki w listingach
+
+Styl projektu rozszerza wewnętrzną tabelę `\lst@DefEC` pakietu `listings` o
+polskie litery. Dzięki temu LuaLaTeX zachowuje ich kolejność, odstępy i
+kolorowanie w komentarzach, napisach oraz identyfikatorach — zarówno w
+środowisku `lstlisting`, jak i w plikach wczytywanych przez
+`\lstinputlisting`. Nie należy dodawać mapowania `literate`.
+
+Znacznik kończący tabelę znaków jest generowany programowo. W pliku stylu nie
+ma surowego znaku sterującego, który jest odrzucany przez nowsze wersje TeX
+Live używane m.in. w Prism.
+
+Jeżeli komunikaty błędów zaczynają się od tekstu „Ten szablon wymaga
+LuaLaTeX”, wybrano niewłaściwy silnik. Komunikaty `OT1` albo `Invalid UTF-8`
+w pliku `main.vrb` również są skutkiem kompilacji przez pdfLaTeX, a nie
+niepoprawnego zapisu polskich znaków w kodzie. W Prism, Overleaf lub podobnym
+edytorze ustaw plik główny na `main.tex`, kompilator na LuaLaTeX i po zmianie
+silnika wykonaj pełną kompilację od początku (`Recompile from scratch`).
+Lokalnie korzystaj z polecenia `latexmk main.tex`.
+
 ## Kompilacja
 
 ### Wymagania lokalne w systemie Windows
@@ -157,7 +181,8 @@ Katalog `dist/` zawiera dwie przenośne wersje szablonu:
 - `szablon-projektu-local.zip` — do pracy na komputerze; zawiera `latexmkrc`,
   a w systemie Windows wymaga MiKTeX-a i Perla;
 - `szablon-projektu-online.zip` — do Prism, Overleaf lub podobnego edytora;
-  nie zawiera lokalnej konfiguracji LatexMk.
+  nie zawiera lokalnej konfiguracji LatexMk, a na początku pliku `main.tex`
+  ma dyrektywę `% !TeX program = lualatex` wskazującą wymagany kompilator.
 
 Oba archiwa zawierają źródła, instrukcje, rozdziały, oświadczenia końcowe,
 przykładową bibliografię i generator paczek. Nie zawierają plików z `build/`,
