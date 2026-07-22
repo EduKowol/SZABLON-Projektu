@@ -22,6 +22,7 @@ SOURCE_DIRS = (
     "backmatter",
     "chapters",
     "config",
+    "docs",
 )
 TOOL_FILES = ("create_release.py",)
 IGNORED_NAMES = (
@@ -90,7 +91,7 @@ def choose_target(requested: str | None) -> str:
         )
 
     print("Wybierz wariant paczki:")
-    print("  1. local  - komputer lokalny; zawiera latexmkrc")
+    print("  1. local  - komputer lokalny; zawiera latexmkrc (Windows: wymaga Perla)")
     print("  2. online - Prism/Overleaf; bez lokalnego latexmkrc")
     while True:
         answer = input("Wariant [1/2, domyślnie 1]: ").strip().lower()
@@ -119,7 +120,23 @@ def variant_readme(target: str) -> str:
     if target == "local":
         return """# Wariant lokalny
 
-Paczka zawiera `latexmkrc`. W katalogu projektu uruchom:
+Paczka zawiera `latexmkrc` i jest przeznaczona do kompilacji na komputerze.
+
+W systemie Windows zainstaluj MiKTeX oraz interpreter Perl (np. Strawberry
+Perl), ponieważ `latexmk` jest skryptem napisanym w Perlu. Po instalacji zamknij
+i ponownie otwórz terminal oraz edytor LaTeX, a następnie sprawdź środowisko:
+
+```text
+perl --version
+latexmk -v
+lualatex --version
+biber --version
+```
+
+Jeżeli polecenie `perl` nie jest rozpoznawane, nie rozpoczynaj diagnozowania
+szablonu — najpierw zainstaluj Perl i uruchom terminal ponownie.
+
+W katalogu projektu uruchom:
 
 ```text
 latexmk main.tex
@@ -137,6 +154,8 @@ lokalnego pliku `latexmkrc`. Po zaimportowaniu archiwum ustaw:
 - kompilator: LuaLaTeX.
 
 Plików pomocniczych i PDF nie należy dodawać ręcznie do paczki źródłowej.
+Lokalna instalacja Perla nie jest potrzebna, ponieważ środowiskiem kompilacji
+zarządza platforma internetowa.
 """
 
 

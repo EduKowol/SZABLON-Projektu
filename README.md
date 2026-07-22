@@ -13,6 +13,13 @@ należy skorzystać z repozytorium
 
 ## Szybki start
 
+Do zalecanej kompilacji lokalnej w systemie Windows potrzebne są **MiKTeX oraz
+Perl**, ponieważ używany przez szablon program `latexmk` jest skryptem napisanym
+w Perlu. Można zainstalować np. [Strawberry Perl](https://strawberryperl.com/),
+a następnie zamknąć i ponownie uruchomić terminal oraz edytor LaTeX. Prism,
+Overleaf i podobne edytory internetowe nie wymagają instalowania Perla na
+komputerze użytkownika.
+
 1. Uzupełnij `config/metadata.tex`, zwłaszcza tytuł, przedmiot, prowadzącego i autorów.
 2. Zastąp teksty instruktażowe w `chapters/` własną treścią.
 3. Dodaj źródła do `bibliografia.bib` i cytuj je przez `\cite{klucz}`.
@@ -62,17 +69,93 @@ Rysunki wstawiaj przez `\projectgraphic`, jednostki zapisuj pakietem `siunitx`, 
 
 ## Kompilacja
 
+### Wymagania lokalne w systemie Windows
+
+Przed pierwszą kompilacją sprawdź dostępność wymaganych programów:
+
+```text
+perl --version
+latexmk -v
+lualatex --version
+biber --version
+```
+
+MiKTeX dostarcza LuaLaTeX, Biber, pakiety LaTeX-a oraz program `latexmk`, ale
+`latexmk` jest skryptem napisanym w Perlu. Dlatego instalacja samego MiKTeX-a
+może nie wystarczyć w systemie Windows. Jeżeli polecenie `perl` nie jest
+rozpoznawane albo `latexmk` zgłasza brak interpretera, zainstaluj Perl — np.
+[Strawberry Perl](https://strawberryperl.com/) — a następnie zamknij i ponownie
+otwórz terminal oraz TeXstudio, aby programy odczytały zaktualizowaną zmienną
+`PATH`.
+
+Sam LuaLaTeX nie wymaga Perla. Perl jest jednak potrzebny do zalecanego
+budowania przez `latexmk`, które automatycznie wykonuje właściwą liczbę
+przebiegów LuaLaTeX i Bibera. Przy pracy w Prism, Overleaf lub podobnym edytorze
+internetowym lokalna instalacja Perla nie jest potrzebna.
+
+### Budowanie dokumentu
+
 ```text
 latexmk main.tex
 latexmk -g main.tex   # pełne przeliczenie po usunięciu błędu
 latexmk -C main.tex   # usunięcie artefaktów kompilacji
 ```
 
+Gotowy dokument powstanie jako `build/main.pdf`.
+
+### TeXstudio
+
+Poniższa konfiguracja powoduje, że TeXstudio uruchamia program `latexmk` w
+katalogu projektu. Program automatycznie odczytuje znajdujący się tam plik
+`latexmkrc`, który wybiera LuaLaTeX, uruchamia Biber w razie potrzeby i zapisuje
+PDF oraz pliki pomocnicze w katalogu `build/`.
+
+Przed konfiguracją należy zainstalować MiKTeX i Perl, ponownie uruchomić
+TeXstudio, a następnie otworzyć w nim plik `main.tex`. Aby skonfigurować
+budowanie projektu:
+
+1. Otwórz **Opcje → Konfiguruj TeXstudio** i po lewej stronie wybierz
+   **Zbuduj**.
+2. Zaznacz znajdującą się na dole okna opcję **Pokaż opcje zaawansowane**.
+3. W polu **Kompilator domyślny** wybierz `txs:///latexmk`.
+4. W sekcji **Polecenia użytkownika** kliknij **+ Dodaj**.
+5. W polu nazwy polecenia wpisz `user0:Latexmk LuaLaTeX`.
+6. W polu polecenia wpisz dokładnie:
+
+   ```text
+   latexmk.exe -synctex=1 -interaction=nonstopmode -file-line-error %.tex
+   ```
+
+7. W sekcji **Opcje budowania → Dodatkowe ścieżki wyszukiwania**, w polu
+   **Plik PDF**, wpisz:
+
+   ```text
+   build;
+   ```
+
+8. Zatwierdź konfigurację przyciskiem **OK**.
+
+![Konfiguracja TeXstudio do kompilacji projektu przez LatexMk](docs/images/Ustawienia_TeXstudio.png)
+
+Wartość `%.tex` oznacza aktualnie kompilowany dokument. Nie należy dopisywać do
+polecenia opcji `-pdf` ani `-lualatex`: właściwy silnik i katalog wyjściowy są
+ustawione centralnie w projektowym pliku `latexmkrc`. Wpis `build;` wskazuje
+TeXstudio dodatkowe miejsce, w którym ma szukać utworzonego PDF-u. Średnik jest
+separatorem ścieżek używanym w tym polu w systemie Windows.
+
+Po zapisaniu ustawień otwórz `main.tex` i uruchom kompilację. Gotowy dokument
+powinien pojawić się jako `build/main.pdf`. Jeśli TeXstudio przy pierwszym
+otwarciu dokumentu poprosi o zgodę na zastosowanie projektowej dyrektywy
+kompilacji, wybierz zgodę tylko dla tego dokumentu. Dyrektywa usuwa z
+wbudowanego polecenia wyłącznie opcję `-pdf`, aby nie wymuszać pdfLaTeX;
+pozostałe ustawienia przejmuje `latexmkrc`.
+
 ## Gotowe paczki ZIP
 
 Katalog `dist/` zawiera dwie przenośne wersje szablonu:
 
-- `szablon-projektu-local.zip` — do pracy na komputerze; zawiera `latexmkrc`;
+- `szablon-projektu-local.zip` — do pracy na komputerze; zawiera `latexmkrc`,
+  a w systemie Windows wymaga MiKTeX-a i Perla;
 - `szablon-projektu-online.zip` — do Prism, Overleaf lub podobnego edytora;
   nie zawiera lokalnej konfiguracji LatexMk.
 

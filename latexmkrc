@@ -1,3 +1,7 @@
+# UWAGA DLA WINDOWS: latexmk jest skryptem napisanym w Perlu. Do lokalnej
+# kompilacji potrzebne są MiKTeX oraz interpreter Perl, np. Strawberry Perl.
+# Po instalacji sprawdź polecenia: perl --version oraz latexmk -v.
+
 # Wszystkie artefakty kompilacji trafiają do jednego katalogu.
 # Dzięki temu katalog główny projektu zawiera wyłącznie źródła.
 $out_dir = 'build';
