@@ -2,6 +2,21 @@
 
 Szablon służy do przygotowania raportu z projektu realizowanego w ramach zajęć. Obsługuje projekty indywidualne i zespołowe.
 
+## Spis treści
+
+- [Powiązany szablon pracy dyplomowej](#powiązany-szablon-pracy-dyplomowej)
+- [Szybki start](#szybki-start)
+- [Autorzy projektu](#autorzy-projektu)
+- [Tryb roboczy i końcowy](#tryb-roboczy-i-końcowy)
+- [Struktura raportu](#struktura-raportu)
+- [Rysunki, jednostki i kod](#rysunki-jednostki-i-kod)
+- [Polskie znaki w listingach](#polskie-znaki-w-listingach)
+- [Kompilacja](#kompilacja)
+  - [Wymagania lokalne w systemie Windows](#wymagania-lokalne-w-systemie-windows)
+  - [Budowanie dokumentu](#budowanie-dokumentu)
+  - [TeXstudio](#texstudio)
+- [Gotowe paczki ZIP](#gotowe-paczki-zip)
+
 ## Powiązany szablon pracy dyplomowej
 
 Szablon dokumentacji projektu wykorzystuje konwencje opracowane dla
