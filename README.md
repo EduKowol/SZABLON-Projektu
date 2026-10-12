@@ -80,6 +80,8 @@ ustawienia `\showaideclaration` i `\showcontributions` w
 
 Plik `backmatter/ai-declaration.tex` jest przygotowany zgodnie z załącznikiem
 nr 2A do Zasad korzystania z narzędzi AI przez studentów i doktorantów
+Politechniki Opolskiej. Polityka korzystania z narzędzi sztucznej inteligencji
+(AI) została opracowana na podstawie Zarządzenia nr 65/2026 Rektora
 Politechniki Opolskiej. Należy pozostawić dokładnie jeden z dwóch wariantów:
 
 - gdy AI wpłynęła na materiał — podać nazwę narzędzia, cel i zakres użycia oraz
