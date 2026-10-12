@@ -73,10 +73,27 @@ Podczas pracy pozostaw `\projectstatus` ustawiony na `draft`. Przed oddaniem zmi
 
 Układ jest propozycją. Rozdziały można łączyć, skracać lub usuwać zgodnie z wymaganiami prowadzącego i charakterem projektu.
 
-Oświadczenie o wykorzystaniu AI oraz tabela wkładu autorów są domyślnie
+Informacja o wykorzystaniu AI oraz tabela wkładu autorów są domyślnie
 włączone. Ich treść znajduje się w `backmatter/`, a widoczność kontrolują
 ustawienia `\showaideclaration` i `\showcontributions` w
 `config/metadata.tex`.
+
+Plik `backmatter/ai-declaration.tex` jest przygotowany zgodnie z załącznikiem
+nr 2A do Zasad korzystania z narzędzi AI przez studentów i doktorantów
+Politechniki Opolskiej. Należy pozostawić dokładnie jeden z dwóch wariantów:
+
+- gdy AI wpłynęła na materiał — podać nazwę narzędzia, cel i zakres użycia oraz
+  elementy przygotowane lub zmienione z AI, a następnie potwierdzić sprawdzenie
+  wyników i odpowiedzialność za materiał;
+- gdy AI nie używano w zakresie wymagającym ujawnienia — zamieścić przygotowane
+  oświadczenie z wariantu 2.
+
+Zwykła autokorekta i sprawdzanie pisowni, które nie wpływają na treść
+merytoryczną, co do zasady nie wymagają ujawnienia, chyba że prowadzący określi
+inaczej. Prowadzący może również zażądać bardziej szczegółowych informacji,
+np. przykładowych poleceń, wyników narzędzia lub materiałów roboczych. Użycie AI
+musi mieścić się w zakresie dopuszczonym przez prowadzącego oraz respektować
+ochronę danych, poufność, prawa autorskie i warunki korzystania z narzędzi.
 
 ## Rysunki, jednostki i kod
 
