@@ -11,6 +11,7 @@ zajęć. Obsługuje opracowania indywidualne i zespołowe.
 - [Autorzy projektu](#autorzy-projektu)
 - [Tryb roboczy i końcowy](#tryb-roboczy-i-końcowy)
 - [Struktura raportu](#struktura-raportu)
+- [Literatura i cytowania](#literatura-i-cytowania)
 - [Rysunki, jednostki i kod](#rysunki-jednostki-i-kod)
 - [Polskie znaki w listingach](#polskie-znaki-w-listingach)
 - [Kompilacja](#kompilacja)
@@ -37,7 +38,7 @@ gdy użytkownik chce korzystać z opcjonalnej automatyzacji przez `latexmk`.
 
 1. Uzupełnij `config/metadata.tex`, zwłaszcza rodzaj i tytuł opracowania, przedmiot, prowadzącego i autorów.
 2. Zastąp teksty instruktażowe w `chapters/` własną treścią.
-3. Dodaj źródła do `bibliografia.bib` i cytuj je przez `\cite{klucz}`.
+3. Dodaj źródła do `literatura.bib` i cytuj je przez `\cite{klucz}`.
 4. W TeXstudio wybierz kompilator `txs:///lualatex` i skompiluj `main.tex`.
 
 Przy podstawowej kompilacji gotowy dokument powstanie jako `main.pdf` w katalogu
@@ -89,7 +90,7 @@ Podczas pracy pozostaw `\projectstatus` ustawiony na `draft`. Przed oddaniem zmi
 - podsumowanie i wnioski;
 - oświadczenie o wykorzystaniu narzędzi AI;
 - podział zadań i procentowy udział autorów;
-- bibliografia i opcjonalne załączniki.
+- literatura i opcjonalne załączniki.
 
 Układ jest propozycją. Rozdziały można łączyć, skracać lub usuwać zgodnie z wymaganiami prowadzącego i charakterem projektu.
 
@@ -116,6 +117,48 @@ inaczej. Prowadzący może również zażądać bardziej szczegółowych informa
 np. przykładowych poleceń, wyników narzędzia lub materiałów roboczych. Użycie AI
 musi mieścić się w zakresie dopuszczonym przez prowadzącego oraz respektować
 ochronę danych, poufność, prawa autorskie i warunki korzystania z narzędzi.
+
+## Literatura i cytowania
+
+Źródła należy zapisywać w pliku `literatura.bib`, a następnie przywoływać
+w tekście przez ich klucze, np.:
+
+```tex
+Metodę opisano w literaturze \cite{lamport1994}.
+```
+
+Cytowania są numerowane automatycznie i wyświetlane w tekście w postaci `[1]`,
+`[2]` itd. Nie należy wpisywać tych numerów ręcznie. Wykaz „Literatura” jest
+porządkowany alfabetycznie według nazwiska pierwszego autora, a dla prac tego
+samego autora dodatkowo według roku i tytułu. Numery pozycji wynikają z tej
+kolejności alfabetycznej, a nie z kolejności pierwszego cytowania w tekście.
+
+W pliku `literatura.bib` autorów rozdziela się angielskim słowem `and`.
+Literatura jest generowana automatycznie i dodawana do spisu treści.
+
+Przy kompilacji lokalnej pojedyncze uruchomienie LuaLaTeX nie wystarcza po
+dodaniu lub zmianie źródeł. Wykonaj kolejno:
+
+```text
+lualatex main.tex
+biber main
+lualatex main.tex
+lualatex main.tex
+```
+
+W TeXstudio odpowiada to kolejno poleceniom **LuaLaTeX**, **Biber**,
+**LuaLaTeX** i ponownie **LuaLaTeX**. Jeżeli w tekście zamiast numeru pojawia
+się klucz, np. `[lamport1994]`, albo nie ma wykazu „Literatura”, oznacza to, że
+Biber nie został jeszcze poprawnie uruchomiony. Opcjonalny LatexMk wykonuje
+cały cykl automatycznie, ale w systemie Windows wymaga Perla. Sposób jego
+ustawienia przedstawiono niżej w sekcji
+[Konfiguracja LatexMk w TeXstudio](#konfiguracja-latexmk).
+
+W Overleaf wystarczy wybrać LuaLaTeX i użyć przycisku **Recompile** — serwis
+korzysta z LatexMk i automatycznie uruchamia potrzebne etapy, w tym obsługę
+bibliografii. Nie trzeba ręcznie wykonywać powyższych czterech poleceń. Gdy po
+zmianie pliku `.bib` wynik nie zostanie odświeżony, użyj opcji **Recompile from
+scratch**.
 
 ## Rysunki, jednostki i kod
 
@@ -228,7 +271,7 @@ Polecenie `\includeonly` jest bezpieczniejsze niż komentowanie wielu poleceń
 `\include`, ponieważ lista i kolejność rozdziałów pozostają niezmienione.
 Przed wygenerowaniem wersji do oddania ponownie zakomentuj `\includeonly`,
 wykonaj pełną kompilację od początku (`Recompile from scratch`) i sprawdź, czy
-w PDF znajdują się wszystkie rozdziały, bibliografia oraz oświadczenia końcowe.
+w PDF znajdują się wszystkie rozdziały, literatura oraz oświadczenia końcowe.
 
 Jeżeli przekroczenie czasu występuje również po ograniczeniu liczby rozdziałów,
 sprawdź rozmiar dołączonych grafik i plików danych oraz czy dokument nie zawiera
@@ -256,7 +299,9 @@ wskazuje właściwy silnik. Przy tej konfiguracji PDF znajduje się jako
 może być potrzebna ponowna kompilacja; bibliografię można uruchomić poleceniem
 Biber, a następnie dwukrotnie LuaLaTeX.
 
-#### Ustawienie opcjonalne — LatexMk
+<a id="konfiguracja-latexmk"></a>
+
+#### Konfiguracja LatexMk w TeXstudio — ustawienie opcjonalne
 
 Ten wariant jest wygodny, gdy dokument ma już bibliografię i wiele odwołań.
 Wymaga zainstalowanego Perla. W sekcji **Polecenia użytkownika** dodaj polecenie

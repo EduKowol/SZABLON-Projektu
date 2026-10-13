@@ -31,8 +31,10 @@
 \RequirePackage[colorlinks=true,linkcolor=projectblue,citecolor=projectblue,urlcolor=projectblue,pdfusetitle]{hyperref}
 \RequirePackage{bookmark}
 \RequirePackage[nameinlink,noabbrev]{cleveref}
-\RequirePackage[backend=biber,style=ieee,citestyle=numeric-comp,sorting=none,sortcites=true,giveninits=true]{biblatex}
-\addbibresource{bibliografia.bib}
+% Cytowania mają postać numerów, np. [1], natomiast wykaz bibliografii jest
+% porządkowany alfabetycznie według autora, a następnie roku i tytułu.
+\RequirePackage[backend=biber,style=numeric,citestyle=numeric-comp,sorting=nyt,sortcites=true,giveninits=true]{biblatex}
+\addbibresource{literatura.bib}
 
 \geometry{a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=15pt,headsep=0.7cm,footskip=1cm}
 \onehalfspacing
@@ -138,7 +140,7 @@
   \end{titlepage}%
 }
 
-\newcommand{\printprojectbibliography}{\cleardoublepage\printbibliography[heading=bibintoc,title={Bibliografia}]}
+\newcommand{\printprojectbibliography}{\cleardoublepage\printbibliography[heading=bibintoc,title={Literatura}]}
 \newcommand{\printprojectlistoffigures}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listfigurename}\listoffigures}
 \newcommand{\printprojectlistoftables}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listtablename}\listoftables}
 \newcommand{\printprojectlistoflistings}{\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\lstlistlistingname}\lstlistoflistings}

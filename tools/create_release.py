@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT_FILES = (
     ".gitignore",
     "README.md",
-    "bibliografia.bib",
+    "literatura.bib",
     "main.tex",
 )
 SOURCE_DIRS = (
