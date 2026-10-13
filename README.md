@@ -1,11 +1,13 @@
-# Szablon dokumentacji projektu (LaTeX)
+# Szablon projektu lub sprawozdania (LaTeX)
 
-Szablon służy do przygotowania raportu z projektu realizowanego w ramach zajęć. Obsługuje projekty indywidualne i zespołowe.
+Szablon służy do przygotowania dokumentacji projektu albo sprawozdania w ramach
+zajęć. Obsługuje opracowania indywidualne i zespołowe.
 
 ## Spis treści
 
 - [Powiązany szablon pracy dyplomowej](#powiązany-szablon-pracy-dyplomowej)
 - [Szybki start](#szybki-start)
+- [Projekt czy sprawozdanie](#projekt-czy-sprawozdanie)
 - [Autorzy projektu](#autorzy-projektu)
 - [Tryb roboczy i końcowy](#tryb-roboczy-i-końcowy)
 - [Struktura raportu](#struktura-raportu)
@@ -33,13 +35,32 @@ Do podstawowej kompilacji lokalnej w systemie Windows wystarczą **MiKTeX,
 TeXstudio i LuaLaTeX**. Perl nie jest wymagany. Jest potrzebny dopiero wtedy,
 gdy użytkownik chce korzystać z opcjonalnej automatyzacji przez `latexmk`.
 
-1. Uzupełnij `config/metadata.tex`, zwłaszcza tytuł, przedmiot, prowadzącego i autorów.
+1. Uzupełnij `config/metadata.tex`, zwłaszcza rodzaj i tytuł opracowania, przedmiot, prowadzącego i autorów.
 2. Zastąp teksty instruktażowe w `chapters/` własną treścią.
 3. Dodaj źródła do `bibliografia.bib` i cytuj je przez `\cite{klucz}`.
 4. W TeXstudio wybierz kompilator `txs:///lualatex` i skompiluj `main.tex`.
 
 Przy podstawowej kompilacji gotowy dokument powstanie jako `main.pdf` w katalogu
 projektu. Wariant `latexmk` zapisuje wynik jako `build/main.pdf`.
+
+## Projekt czy sprawozdanie
+
+Ten sam szablon można wykorzystać do projektu semestralnego i sprawozdania.
+W pliku `config/metadata.tex` zmień tylko wartość polecenia `\projecttype`, np.:
+
+```tex
+\newcommand{\projecttype}{Projekt semestralny}
+```
+
+albo:
+
+```tex
+\newcommand{\projecttype}{Sprawozdanie z ćwiczenia laboratoryjnego}
+```
+
+Wartość pojawi się automatycznie na stronie tytułowej oraz we właściwościach
+pliku PDF. Rozdziały, które nie pasują do danego opracowania, można zakomentować
+w pliku `main.tex`. Ich układ należy dostosować do wymagań prowadzącego.
 
 ## Autorzy projektu
 

@@ -116,7 +116,7 @@
 \crefname{lstlisting}{listing}{listingi}
 \Crefname{lstlisting}{Listing}{Listingi}
 
-\hypersetup{pdftitle={\projecttitle},pdfauthor={\projectpdfauthors},pdfsubject={Dokumentacja projektu}}
+\hypersetup{pdftitle={\projecttitle},pdfauthor={\projectpdfauthors},pdfsubject={\projecttype}}
 
 \newcommand{\makeprojecttitle}{%
   \begin{titlepage}\thispagestyle{empty}\begin{center}
@@ -152,7 +152,7 @@
   }%
 }
 \AtBeginDocument{%
-  \projectwarnifdefault{\projecttitle}{Tytuł projektu}{Tytuł projektu nie został uzupełniony}
+  \projectwarnifdefault{\projecttitle}{Tytuł opracowania}{Tytuł opracowania nie został uzupełniony}
   \projectwarnifdefault{\coursetitle}{Nazwa przedmiotu}{Nazwa przedmiotu nie została uzupełniona}
   \projectwarnifdefault{\programme}{Nazwa kierunku}{Nazwa kierunku nie została uzupełniona}
   \projectwarnifdefault{\submissiondate}{dd.mm.rrrr}{Data oddania nie została uzupełniona}
