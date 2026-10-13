@@ -91,7 +91,7 @@ def choose_target(requested: str | None) -> str:
         )
 
     print("Wybierz wariant paczki:")
-    print("  1. local  - komputer lokalny; zawiera latexmkrc (Windows: wymaga Perla)")
+    print("  1. local  - komputer lokalny; LuaLaTeX, opcjonalnie LatexMk z Perlem")
     print("  2. online - Prism/Overleaf; bez lokalnego latexmkrc")
     while True:
         answer = input("Wariant [1/2, domyślnie 1]: ").strip().lower()
@@ -120,30 +120,24 @@ def variant_readme(target: str) -> str:
     if target == "local":
         return """# Wariant lokalny
 
-Paczka zawiera `latexmkrc` i jest przeznaczona do kompilacji na komputerze.
-
-W systemie Windows zainstaluj MiKTeX oraz interpreter Perl (np. Strawberry
-Perl), ponieważ `latexmk` jest skryptem napisanym w Perlu. Po instalacji zamknij
-i ponownie otwórz terminal oraz edytor LaTeX, a następnie sprawdź środowisko:
+Paczka jest przeznaczona do kompilacji na komputerze. Podstawowy wariant wymaga
+MiKTeX-a i korzysta bezpośrednio z LuaLaTeX; Perl nie jest potrzebny:
 
 ```text
-perl --version
-latexmk -v
-lualatex --version
-biber --version
+lualatex main.tex
 ```
 
-Jeżeli polecenie `perl` nie jest rozpoznawane, nie rozpoczynaj diagnozowania
-szablonu — najpierw zainstaluj Perl i uruchom terminal ponownie.
+Gotowy dokument powstanie jako `main.pdf` w katalogu projektu. Szczegółowa
+konfiguracja TeXstudio i obsługa bibliografii są opisane w `README.md`.
 
-W katalogu projektu uruchom:
+Paczka zawiera także `latexmkrc`. Opcjonalna automatyzacja przez:
 
 ```text
 latexmk main.tex
 ```
 
-LuaLaTeX i katalog wynikowy `build/` zostaną wybrane automatycznie.
-Gotowy dokument powstanie jako `build/main.pdf`.
+wymaga w systemie Windows interpretera Perl, np. Strawberry Perl. LatexMk
+automatycznie uruchamia LuaLaTeX i Biber, a wynik zapisuje w `build/main.pdf`.
 """
     return """# Wariant internetowy
 
